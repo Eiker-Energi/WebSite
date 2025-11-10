@@ -2,8 +2,8 @@ name: Deploy static site
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -17,32 +17,49 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      # Якщо lock-файл є — увімкнути кеш npm
+      - name: Setup Node (with cache)
+        if: ${{ hashFiles('package-lock.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      # Якщо lock-файлу немає — без кешу
+      - name: Setup Node (no cache)
+        if: ${{ hashFiles('package-lock.json') == '' }}
         uses: actions/setup-node@v4
         with:
           node-version: 20
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci --no-audit --no-fund
+          else
+            npm install --no-audit --no-fund
+          fi
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint --if-present
 
       - name: Type check
-        run: npm run typecheck
+        run: npm run typecheck --if-present
 
       - name: Build
-        run: npm run build
+        run: npm run build --if-present
 
       - name: Export static site
-        run: npm run export
+        run: npm run export --if-present
 
       - name: Configure Pages
-        uses: actions/configure-pages@v4
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
