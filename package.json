@@ -23,6 +23,7 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "eslint-import-resolver-typescript": "3.6.1",
     "@playwright/test": "1.48.2",
     "@tailwindcss/aspect-ratio": "0.4.2",
     "@tailwindcss/container-queries": "0.1.1",
