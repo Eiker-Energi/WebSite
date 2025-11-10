@@ -1,44 +1,59 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   root: true,
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: true,
+    project: ['./tsconfig.json'],
   },
-  plugins: ["@typescript-eslint", "import", "react", "react-hooks", "jsx-a11y", "tailwindcss"],
+  plugins: [
+    '@typescript-eslint',
+    'import',
+    'react',
+    'react-hooks',
+    'jsx-a11y',
+    'tailwindcss',
+  ],
   extends: [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/strict",
-    "plugin:tailwindcss/recommended",
-    "prettier"
+    'next/core-web-vitals',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/strict',
+    'plugin:tailwindcss/recommended',
+    'prettier',
   ],
   settings: {
-    react: {
-      version: "detect",
-    },
-    "import/resolver": {
+    react: { version: 'detect' },
+    // важливо: щоб імпорти типу "@/..." і стандартні імпорти коректно резолвились
+    'import/resolver': {
       typescript: {
-        project: ["./tsconfig.json"],
+        project: ['./tsconfig.json'],
+        alwaysTryTypes: true,
+      },
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
     },
-    tailwindcss: {
-      callees: ["cn"],
-    },
+    tailwindcss: { callees: ['cn'] },
   },
   rules: {
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "import/order": [
-      "error",
+    // React 18: не потрібен імпорт React у файлах
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+
+    // Порядок імпортів
+    'import/order': [
+      'error',
       {
-        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"], "object"],
-        "newlines-between": "always",
-        "alphabetize": { "order": "asc", "caseInsensitive": true }
-      }
+        groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index'], 'object'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      },
     ],
-    "tailwindcss/no-custom-classname": "off"
-  }
+
+    // Tailwind попередження не блокує CI
+    'tailwindcss/no-custom-classname': 'off',
+    'tailwindcss/enforces-shorthand': 'warn',
+  },
 };
