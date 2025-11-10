@@ -1,7 +1,8 @@
 import { CheckCircle } from "lucide-react";
 
-import { CTAButtons } from "@/components/CTAButtons";
+
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { CTAButtons } from "@/components/CTAButtons";
 import { routes } from "@/lib/routes";
 
 const steps = [
