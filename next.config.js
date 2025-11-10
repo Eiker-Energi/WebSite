@@ -4,9 +4,6 @@ const nextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
   assetPrefix: 'https://',
-  experimental: {
-    typedRoutes: true,
-  },
+  experimental: { typedRoutes: true },
 };
-
 module.exports = nextConfig;
