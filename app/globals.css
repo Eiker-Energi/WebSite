@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+}
+
+.user-tabbing :focus {
+  outline: 3px solid #59C1B5;
+  outline-offset: 4px;
+}
+
+a {
+  color: inherit;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF3E0;
+  }
+
+  body {
+    font-family: inherit;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply rounded-full bg-mint-400 px-6 py-3 text-sm font-semibold text-text-900 shadow-soft transition hover:bg-mint-400/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mint-400;
+  }
+
+  .btn-secondary {
+    @apply rounded-full border border-text-900/20 bg-white px-6 py-3 text-sm font-semibold text-text-900 transition hover:border-text-900/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-900/50;
+  }
+}
