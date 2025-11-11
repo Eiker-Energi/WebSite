@@ -1,3 +1,4 @@
+import type { Route } from "next";
 import Link from "next/link";
 
 import { routes } from "@/lib/routes";
@@ -48,7 +49,10 @@ export default function MinSidePage() {
         <p className="mt-4 text-sm text-text-900/80">
           Logg inn med BankID eller engangskode på SMS. Vi sender deg en sikker lenke på telefonen. Trenger du hjelp, kan du kontakte kundeservice direkte.
         </p>
-        <Link href={routes.kundeservice} className="mt-4 inline-flex text-sm font-semibold text-teal-900 hover:underline">
+        <Link
+          href={routes.kundeservice as Route}
+          className="mt-4 inline-flex text-sm font-semibold text-teal-900 hover:underline"
+        >
           Vi kan hjelpe deg
         </Link>
       </section>
